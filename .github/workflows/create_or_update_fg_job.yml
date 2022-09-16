@@ -33,14 +33,16 @@ jobs:
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: python3 code/git/checkout_code.py
 
-    - name: Create or Update Job
+    - name: Create or Update And Run Job
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: python3 code/fg/create_or_update_job.py
 
-    - name: Run
+    - name: Run Create Feature Groups
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
-      run: python3 code/fg/run_job.py   
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
+      run: python3 code/fg/run_job.py

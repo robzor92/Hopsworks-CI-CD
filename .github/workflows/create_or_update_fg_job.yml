@@ -36,6 +36,8 @@ jobs:
     - name: Create or Update Job
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: python3 code/fg/create_or_update_job.py
 
     - name: Run

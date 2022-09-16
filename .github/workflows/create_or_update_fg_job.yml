@@ -1,0 +1,41 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Create or update FG creation job on Hopsworks
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.8"
+
+    - name: Install dependencies
+      run: pip3 install hopsworks  
+
+    - name: Checkout Code
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+      run: python3 code/git/checkout_code.py
+
+    - name: Create or Update Job
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+      run: python3 code/fg/create_or_update_job.py
+
+    - name: Run
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+      run: python3 code/fg/run_job.py   

@@ -5,7 +5,8 @@ name: Create or update FG creation job on Hopsworks
 
 on:
   push:
-    branches: [ main ]
+    paths:
+      - 'code/fg/FG_VERSION'
 
 jobs:
   build:

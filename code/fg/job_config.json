@@ -1,0 +1,4 @@
+{'type': 'pythonJobConfiguration',
+ 'resourceConfig': {'cores': 1.0, 'memory': 1024, 'gpus': 0},
+ 'logRedirection': True,
+ 'jobType': 'PYTHON'}

@@ -1,6 +1,6 @@
 import hopsworks
 
-project = hopsworks.login(host="2176a0f0-3503-11ed-be64-b1a4781e5f0a.cloud.hopsworks.ai")
+project = hopsworks.login()
 
 git_api = project.get_git_api()
 

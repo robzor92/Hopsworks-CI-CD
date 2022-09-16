@@ -41,7 +41,7 @@ jobs:
       id: read_fg_version
       uses: andstor/file-reader-action@v1
       with:
-        path: 'code/fg/FG_VERSION'      
+        path: 'code/fg/FG_VERSION'
 
     - name: Run Feature Groups Creation
       env:

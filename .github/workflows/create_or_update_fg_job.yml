@@ -36,7 +36,7 @@ jobs:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
-      run: python3 code/fg/create_or_update_job.py
+      run: python3 code/utils/create_or_update_job.py --name create_fg --appPath Jupyter/Hopsworks-CI-CD/code/fg/create_fg.ipynb
 
     - name: Run Feature Groups Creation
       env:
@@ -44,4 +44,4 @@ jobs:
         HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: |
-        python3 code/fg/run_job.py --version $(cat ./code/fg/FG_VERSION)
+        python3 code/utils/run_job.py --name create_fg --version $(cat ./code/fg/FG_VERSION)

@@ -29,6 +29,8 @@ jobs:
     - name: Checkout Code
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: python3 code/git/checkout_code.py
 
     - name: Create or Update Job

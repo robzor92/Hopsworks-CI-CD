@@ -3,7 +3,7 @@ name: FeatureGroup CI/CD on Hopsworks
 on:
   push:
     paths:
-      - 'code/**'      
+      - 'code/fg/**'      
       - 'code/fg/FG_VERSION'
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: python3 code/git/checkout_code.py
 
-    - name: Create or Update Feature Group Creation Job
+    - name: Create Feature Group Creation Job
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
@@ -60,3 +60,18 @@ jobs:
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: |
         python3 code/utils/run_job.py --name training --version $(cat ./code/fg/FG_VERSION)
+
+    - name: Create deploy job
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
+      run: python3 code/utils/create_or_update_job.py --name deploy --appPath Jupyter/Hopsworks-CI-CD/code/deploy/deploy.ipynb
+
+    - name: Run deploy job
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
+      run: |
+        python3 code/utils/run_job.py --name deploy 

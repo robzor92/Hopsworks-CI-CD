@@ -1,0 +1,46 @@
+name: Training CI/CD on Hopsworks
+
+on:
+  push:
+    paths:
+      - 'code/training/**'      
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.8"
+
+    - name: Install dependencies
+      run: pip3 install hopsworks  
+
+    - name: Checkout Code
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
+      run: python3 code/git/checkout_code.py
+
+    - name: Create training job
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
+      run: python3 code/utils/create_or_update_job.py --name training --appPath Jupyter/Hopsworks-CI-CD/code/training/training.ipynb
+
+    - name: Run training job
+      env:
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
+        HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
+      run: |
+        python3 code/utils/run_job.py --name training --version $(cat ./code/fg/FG_VERSION)

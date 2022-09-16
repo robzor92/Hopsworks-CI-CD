@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Create or update FG creation job on Hopsworks
+name: FeatureGroup CI/CD on Hopsworks
 
 on:
   push:
@@ -33,7 +30,7 @@ jobs:
         HOPSWORKS_HOST: ${{ secrets.HOPSWORKS_HOST }}
       run: python3 code/git/checkout_code.py
 
-    - name: Create or Update And Run Job
+    - name: Create or Update Feature Group Creation Job
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}
@@ -46,7 +43,7 @@ jobs:
       with:
         path: 'code/fg/FG_VERSION'      
 
-    - name: Run Create Feature Groups
+    - name: Run Feature Groups Creation
       env:
         HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         HOPSWORKS_PROJECT: ${{ secrets.HOPSWORKS_PROJECT }}

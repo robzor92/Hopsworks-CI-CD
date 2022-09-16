@@ -3,7 +3,7 @@ name: FeatureGroup CI/CD on Hopsworks
 on:
   push:
     paths:
-      - 'code/*'      
+      - 'code/**'      
       - 'code/fg/FG_VERSION'
 
 jobs:
